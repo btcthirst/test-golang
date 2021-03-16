@@ -3,7 +3,14 @@
 {{ template "header" }}
     <main>
         <p>user1</p>
-        {{ . }}
+        {{ range . }}
+
+        <ul>
+            <li>{{ .ID }} </li>
+            <li>{{ .UserName }} </li>
+            <li>{{ .Email }} </li>
+        </ul>
+        {{ end }}
     </main>
 {{ template "footer" }}
 {{ end }}    

@@ -3,6 +3,8 @@ package controllers
 import (
 	"net/http"
 	"text/template"
+
+	"github.com/btcthirst/practical-tasks-nix/rest-api/api/models"
 )
 
 func PostPage(w http.ResponseWriter, r *http.Request) {
@@ -11,8 +13,7 @@ func PostPage(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	//test data
-	P := "more more test text"
+	posts := models.GetAll(models.Posts)
 
-	t.ExecuteTemplate(w, "post", P)
+	t.ExecuteTemplate(w, "post", posts)
 }

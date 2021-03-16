@@ -3,6 +3,8 @@ package controllers
 import (
 	"net/http"
 	"text/template"
+
+	"github.com/btcthirst/practical-tasks-nix/rest-api/api/models"
 )
 
 func CommentPage(w http.ResponseWriter, r *http.Request) {
@@ -11,8 +13,7 @@ func CommentPage(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	//test data
-	P := "more more test text"
+	comments := models.GetAll(models.Comments)
 
-	t.ExecuteTemplate(w, "comment", P)
+	t.ExecuteTemplate(w, "comment", comments)
 }
