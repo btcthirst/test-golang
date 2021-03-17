@@ -11,6 +11,6 @@ import (
 func listen(p int) {
 	fmt.Printf("\n\nListening port %d\n\n<-", p)
 	port := fmt.Sprintf(":%d", p)
-	routers.MyHandlers()
-	log.Fatal(http.ListenAndServe(port, nil))
+	r := routers.MyHandlers()
+	log.Fatal(http.ListenAndServe(port, r))
 }
