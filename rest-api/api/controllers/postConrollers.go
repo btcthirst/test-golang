@@ -62,7 +62,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Request to delete user %v", id)
+	log.Printf("Request to delete post %v", id)
 
 	db := models.Connect()
 	var posts []models.Post
@@ -85,7 +85,7 @@ func PutPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Request to put user %v", id)
+	log.Printf("Request to put post %v", id)
 
 	db := models.Connect()
 	var posts []models.Post

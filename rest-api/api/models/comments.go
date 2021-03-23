@@ -5,7 +5,7 @@ import "time"
 //Comment is an...
 type Comment struct {
 	ID      uint64 `gorm:"primary_key;auto_increment" json:"id"`
-	Comment string `gorm:"size:255 ;not null" json:"comments"`
+	Comment string `gorm:"size:255 ;not null" json:"comment"`
 	UserID  uint64 `gorm:"not null" json:"user_id"`
 
 	PostID uint64 `gorm:"not null" json:"post_id"`

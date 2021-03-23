@@ -74,6 +74,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		if user.ID == id {
 			db.Delete(&user)
 			log.Print("Success!!!")
+			fmt.Fprintf(w, "user id: %v deleted", id)
 		}
 	}
 }
