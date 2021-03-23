@@ -8,7 +8,7 @@ import (
 
 func MyHandlers() {
 	http.HandleFunc("/", controllers.HomePage)
-	http.HandleFunc("/users", controllers.UserPage)
-	http.HandleFunc("/posts", controllers.PostPage)
-	http.HandleFunc("/comments", controllers.CommentPage)
+	http.HandleFunc("/users/", controllers.UserPage)
+	http.HandleFunc("/posts/", controllers.PostPage)
+	http.HandleFunc("/comments/", controllers.CommentPage)
 }
