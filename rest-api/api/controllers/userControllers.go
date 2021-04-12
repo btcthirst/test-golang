@@ -51,7 +51,7 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 	//try to catch empty post request
 	bug := json.NewDecoder(r.Body).Decode(&user)
 	if bug != nil {
-		utilites.ToJSON(w, "can`t use empty post", http.StatusOK)
+		utilites.ToJSON(w, "can`t use empty post method", http.StatusOK)
 	} else {
 		if models.CheckUser(user) {
 			models.NewUser(user)
@@ -63,18 +63,45 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	// var user models.User
-	// body := utilites.BodyParser(r)
-	// json.Unmarshal(body,&user)
-	// models.NewUser(user)
-	// utilites.ToJSON(w, "user created", http.StatusOK)
-
 }
 
 func PutUser(w http.ResponseWriter, r *http.Request) {
-	utilites.ToJSON(w, "user udated", http.StatusOK)
+	slice := strings.Split(r.URL.String(), "/")
+	if slice[len(slice)-1] == "" {
+		utilites.ToJSON(w, "no users to update", http.StatusOK)
+	}
+	id, err := strconv.ParseUint(slice[len(slice)-1], 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db := models.Connect()
+
+	var user models.User
+	defer r.Body.Close()
+
+	//try to catch empty post request
+	bug := json.NewDecoder(r.Body).Decode(&user)
+	if bug != nil {
+		utilites.ToJSON(w, "can`t use empty put method", http.StatusOK)
+	} else {
+		user.ID = id
+		db.Model(&user).Updates(models.User{UserName: user.UserName, Email: user.Email, Password: user.Password})
+		utilites.ToJSON(w, "user created", http.StatusOK)
+
+	}
+
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	slice := strings.Split(r.URL.String(), "/")
+	if slice[len(slice)-1] == "" {
+		utilites.ToJSON(w, "no users to update", http.StatusOK)
+	}
+	id, err := strconv.ParseUint(slice[len(slice)-1], 10, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db := models.Connect()
+	db.Where("id=?", id).Delete(&models.User{})
 	utilites.ToJSON(w, "user deleted", http.StatusOK)
 }
