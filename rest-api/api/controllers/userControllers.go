@@ -95,7 +95,7 @@ func PutUser(w http.ResponseWriter, r *http.Request) {
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	slice := strings.Split(r.URL.String(), "/")
 	if slice[len(slice)-1] == "" {
-		utilites.ToJSON(w, "no users to update", http.StatusOK)
+		utilites.ToJSON(w, "no users to delete", http.StatusOK)
 	}
 	id, err := strconv.ParseUint(slice[len(slice)-1], 10, 64)
 	if err != nil {

@@ -22,3 +22,17 @@ func NewPost(post Post) error {
 
 	return err
 }
+
+func CheckPost(post Post) bool {
+	//point to update func
+	db := Connect()
+	var posts []Post
+	db.Find(&posts)
+	for _, p := range posts {
+		if p.Title == post.Title || p.Body == post.Body {
+			return false
+		}
+
+	}
+	return true
+}
