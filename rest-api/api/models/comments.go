@@ -22,3 +22,17 @@ func NewComment(comment Comment) error {
 
 	return err
 }
+
+func CheckComment(comment Comment) bool {
+	//point to update func
+	db := Connect()
+	var comments []Comment
+	db.Find(&comments)
+	for _, c := range comments {
+		if c.Comment == comment.Comment {
+			return false
+		}
+
+	}
+	return true
+}
