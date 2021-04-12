@@ -4,7 +4,7 @@ import "time"
 
 //User is an ...
 type User struct {
-	ID        uint32    `gorm:"primary_key;auto_increment" json:"id"`
+	ID        uint64    `gorm:"primary_key;auto_increment" json:"id"`
 	UserName  string    `gorm:"type:varchar(150);not null;unique_index" json:"user_name"`
 	Email     string    `gorm:"type:varchar(150);not null;unique_index" json:"email"`
 	Password  string    `gorm:"type:varchar(150);not null" json:"password"`
@@ -18,4 +18,18 @@ func NewUser(user User) error {
 	err := db.Create(&user).Error
 
 	return err
+}
+
+func CheckUser(user User) bool {
+	//point to update func
+	db := Connect()
+	var users []User
+	db.Find(&users)
+	for _, u := range users {
+		if u.UserName == user.UserName || u.Email == user.Email {
+			return false
+		}
+
+	}
+	return true
 }

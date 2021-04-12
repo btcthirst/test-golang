@@ -2,37 +2,79 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
-	"text/template"
+	"strconv"
+	"strings"
 
 	"github.com/btcthirst/practical-tasks-nix/rest-api/api/models"
-	"github.com/btcthirst/practical-tasks-nix/rest-api/api/utils"
+	"github.com/btcthirst/practical-tasks-nix/rest-api/api/utilites"
 )
 
 func UserPage(w http.ResponseWriter, r *http.Request) {
 
-	t, err := template.ParseFiles("./api/controllers/templates/userPage.html", "./api/controllers/templates/header.html", "./api/controllers/templates/footer.html")
-	if err != nil {
-		panic(err)
+	switch r.Method {
+	case http.MethodGet:
+		GetUser(w, r)
+	case http.MethodPost:
+		PostUser(w, r)
+	case http.MethodPut:
+		PutUser(w, r)
+	case http.MethodDelete:
+		DeleteUser(w, r)
+	default:
+		fmt.Fprintf(w, "%v -there is no such method on this page", r.Method)
+	}
+}
+
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	slice := strings.Split(r.URL.String(), "/")
+	if slice[len(slice)-1] != "" {
+		id, err := strconv.ParseUint(slice[len(slice)-1], 10, 64)
+		if err != nil {
+			log.Fatal(err)
+		}
+		users := models.GetByID(models.Users, id)
+		utilites.ToJSON(w, users, http.StatusOK)
+	} else {
+		users := models.GetAll(models.Users)
+		utilites.ToJSON(w, users, http.StatusOK)
 	}
 
-	users := models.GetAll(models.Users)
-	//utils.ToJSON(w, users, http.StatusOK)
-
-	//test data
-	//P := "more more test users"
-
-	t.ExecuteTemplate(w, "user", users)
 }
 
 func PostUser(w http.ResponseWriter, r *http.Request) {
-
-	body := utils.BodyParser(r)
 	var user models.User
-	err := json.Unmarshal(body, &user)
-	if err != nil {
-		utils.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
-		return
+	defer r.Body.Close()
+
+	//try to catch empty post request
+	bug := json.NewDecoder(r.Body).Decode(&user)
+	if bug != nil {
+		utilites.ToJSON(w, "can`t use empty post", http.StatusOK)
+	} else {
+		if models.CheckUser(user) {
+			models.NewUser(user)
+			utilites.ToJSON(w, "user created", http.StatusOK)
+		} else {
+
+			utilites.ToJSON(w, "not uniq user", http.StatusOK)
+		}
+
 	}
-	utils.ToJSON(w, "User created success!", http.StatusCreated)
+
+	// var user models.User
+	// body := utilites.BodyParser(r)
+	// json.Unmarshal(body,&user)
+	// models.NewUser(user)
+	// utilites.ToJSON(w, "user created", http.StatusOK)
+
+}
+
+func PutUser(w http.ResponseWriter, r *http.Request) {
+	utilites.ToJSON(w, "user udated", http.StatusOK)
+}
+
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	utilites.ToJSON(w, "user deleted", http.StatusOK)
 }

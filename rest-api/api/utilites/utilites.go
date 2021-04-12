@@ -1,4 +1,4 @@
-package utils
+package utilites
 
 import (
 	"encoding/json"
@@ -9,6 +9,7 @@ import (
 )
 
 func BodyParser(r *http.Request) []byte {
+	defer r.Body.Close()
 	body, err := ioutil.ReadAll(r.Body)
 	checkErr(err)
 	return body

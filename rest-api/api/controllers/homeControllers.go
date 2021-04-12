@@ -2,17 +2,14 @@ package controllers
 
 import (
 	"net/http"
-	"text/template"
+
+	"github.com/btcthirst/practical-tasks-nix/rest-api/api/utilites"
 )
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("./api/controllers/templates/homePage.html", "./api/controllers/templates/header.html", "./api/controllers/templates/footer.html")
-	if err != nil {
-		panic(err)
-	}
 
 	//test data
-	P := "more more test text"
+	text := "my home page"
 
-	t.ExecuteTemplate(w, "home", P)
+	utilites.ToJSON(w, text, http.StatusOK)
 }
