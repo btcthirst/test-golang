@@ -1,17 +1,24 @@
 package models
 
 import (
-	"gorm.io/gorm"
+	"time"
 )
 
 type User struct {
-	gorm.Model
-	Name     string
-	Email    string
-	Password string
+	Name      string
+	Email     string
+	Password  string
+	ID        uint64
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
 }
 
-func NewUser(u User) {
+func NewUser(u *User) {
+	var us User
 	db := GetDB()
-	db.Create(&u)
+
+	us = *u
+
+	db.Create(&us)
 }

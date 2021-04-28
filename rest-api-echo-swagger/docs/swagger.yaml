@@ -1,13 +1,311 @@
 basePath: /
-host: localhost:9000
+definitions:
+  models.Comment:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      postID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  models.Post:
+    properties:
+      body:
+        type: string
+      commentsID:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      imageURL:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userID:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost:1982
 info:
   contact:
     email: btcthirst@gmail.com
     name: API Support
-    url: http://www.swagger.io/support
   description: This is a sample server Posts server.
   termsOfService: http://swagger.io/terms/
   title: My API for practice
   version: "1.0"
-paths: {}
+paths:
+  /comments/:
+    get:
+      description: Get all Comments fron DB if exist
+      produces:
+      - json/string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+      summary: Get all Comments
+      tags:
+      - Comments
+    post:
+      consumes:
+      - application/json
+      description: Create a new Comment
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Comment'
+      summary: Create a Comment
+      tags:
+      - Comments
+  /comments/{id}:
+    delete:
+      description: delete existing Comment
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+      summary: delete a Comment
+      tags:
+      - Comments
+    get:
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Comment'
+      summary: Retrieves Comment based on given ID
+      tags:
+      - Comments
+    put:
+      consumes:
+      - application/json
+      description: Update a existing Comment
+      parameters:
+      - description: Comment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Comment'
+      summary: Update a Comment
+      tags:
+      - Comments
+  /posts/:
+    get:
+      description: Get all posts fron DB if exist
+      produces:
+      - json/string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Post'
+      summary: Get all posts
+      tags:
+      - posts
+    post:
+      consumes:
+      - application/json
+      description: Create a new Post
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Post'
+      summary: Create a post
+      tags:
+      - posts
+  /posts/{id}:
+    delete:
+      description: delete existing Post
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Post'
+      summary: delete a Post
+      tags:
+      - posts
+    get:
+      parameters:
+      - description: Post ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Post'
+      summary: Retrieves post based on given ID
+      tags:
+      - posts
+    put:
+      consumes:
+      - application/json
+      description: Update a existing Post
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Post'
+      summary: Update a post
+      tags:
+      - posts
+  /users/:
+    get:
+      description: Get all users fron DB if exist
+      produces:
+      - json/string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Create a user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      description: delete existing user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: delete a user
+      tags:
+      - users
+    get:
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Retrieves user based on given ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update a existing user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Update a user
+      tags:
+      - users
 swagger: "2.0"

@@ -13,7 +13,7 @@ const (
 	password = "qwe123RTY123#p"
 	host     = "127.0.0.1"
 	port     = "3306"
-	database = "rest_api_echo" /*db must be created before calling*/
+	database = "rest_api_echo_swagger" /*db must be created before calling*/
 )
 
 var DB *gorm.DB

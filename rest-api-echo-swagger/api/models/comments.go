@@ -1,15 +1,21 @@
 package models
 
-import "gorm.io/gorm"
+import "time"
 
 type Comment struct {
-	gorm.Model
-	Body   string
-	Email  string
-	PostID uint64
+	ID        uint64
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt time.Time
+	Body      string
+	Email     string
+	PostID    uint64
 }
 
-func NewComment(c Comment) {
+func NewComment(cm *Comment) {
+	var c Comment
+
 	db := GetDB()
+	c = *cm
 	db.Create(&c)
 }
