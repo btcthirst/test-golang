@@ -1,0 +1,31 @@
+{{define "loginPage"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Oauth2.0 and Basic Auth</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+    <main class="container">
+        <div class="jumbotron m-5">
+            <ul class="navbar nav flex-column border">
+                <li class= "nav-item m-2"><a class="btn btn-secondary " href="/api/v1/loginGoogle">...Google Log In</a></li>
+                <li class= "nav-item m-2"><a class="btn btn-secondary" href="/api/v1/loginFacebook">...Facebook Log In</a></li>
+                <li class= "nav-item m-2"><a class="btn btn-secondary disabled" href="/api/v1/login" aria-disabled="true">... Log In</a></li>
+                <li class= "nav-item m-2"><a class="btn btn-secondary disabled" href="/api/v1/login" aria-disabled="true">... Log In</a></li>
+                <li class= "nav-item m-2"><a class="btn btn-secondary " href="/api/v1/loginBasic">Log In By Email</a></li>
+            </ul>
+            
+            
+            
+            
+            
+        </div>
+    </main>
+    
+</body>
+</html>
+{{end}}

@@ -73,3 +73,34 @@ func DeleteUser(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, s)
 }
+<<<<<<< Updated upstream
+=======
+
+func GetAllUsers(c echo.Context) error {
+	users, err := models.GetAll()
+	if err != nil {
+		return c.JSON(http.StatusNoContent, err)
+	}
+	var us []models.UserOut
+	var u1 models.UserOut
+	for _, u := range users {
+		u1.ID = u.ID
+		u1.Email = u.Email
+		u1.Name = u.Name
+		us = append(us, u1)
+	}
+	return c.JSON(http.StatusOK, us)
+}
+
+func GetUser(c echo.Context) error {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, "can`t find user without id")
+	}
+	user, err := models.GetUser(id)
+	if err != nil {
+		return c.JSON(http.StatusNoContent, err)
+	}
+	return c.JSON(http.StatusOK, user)
+}
+>>>>>>> Stashed changes
